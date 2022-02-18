@@ -1,0 +1,164 @@
+<div class="row" style="margin-bottom: 446px;width: 1020px;margin-left:20px">
+  <div class="container-fluid pageContainer">
+    <div class="card">
+    <form #blform="ngForm" (ngSubmit)="submitForm(blform)">
+      <div class="row">
+        <div class="col">
+          <div class="row">
+            <div class="col-4">
+              <label>Resource Type</label>
+            </div>
+            <div class="col-8">
+              <select class="form-control" #resourceTypeDrop name="resType" (change)="filterResource(resourceTypeDrop.value)" ngModel>
+                <option *ngFor="let resType of resourceTypelist" value={{resType.Name}}>{{resType.Name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col-4">
+              <label>Resource Name</label>
+            </div>
+            <div class="col-8" style="text-align: right;">
+              <select class="form-control" #resourceDrop name="ResName" ngModel>
+                <option *ngFor="let res of resourcelist" value={{res.Id}}>{{res.Name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>        
+      </div>
+      <div class="row">
+          <div class="col">
+            <div class="row">
+              <div class="col-4">
+                <label>Start Date</label>
+              </div>
+              <div class="col-8">
+                <input type="date" name="startDate" ngModel>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="row">
+              <div class="col-4">
+                <label>End Date</label>
+              </div>
+              <div class="col-8" style="text-align: right;">
+                <input type="date" name="endDate" ngModel>
+              </div>
+            </div>
+          </div>        
+        </div>
+        <div class="row">        
+          <div class="col" style="text-align: right; margin-right: 15px">
+            <button type="submit">SUBMIT</button>
+          </div>
+        </div>      
+    </form>
+  </div>
+    <div class="tableContainer card" *ngIf="showRecords;else elseBlock">
+      <div class="installedSoftwareTableDiv" *ngIf="installedSoftwareList">
+        <div class="row">
+          <div class="col-11 tableHeading">Installed Software</div>
+          <button type="button" class="btn btn-link collapsed col-1 btnClass" data-toggle="collapse" data-target="#ISDiv" style="text-align: right"><i class="fa fa-plus"></i></button>        
+        </div>  
+        <div id="ISDiv"  class="collapse in">
+            <table class="table">
+                <tr>
+                    <th style="text-align:center">Software Name</th>
+                    <th style="text-align:center">Version</th>
+                    <th style="text-align:center">Installed Date</th>
+                    <th style="text-align:center">Publisher</th>
+                    <th style="text-align:center">Old Version</th>
+                    <th style="text-align:center">Old Installed Date</th>
+                    <th style="text-align:center">Old Publisher</th>
+                    <th style="text-align:center">Status</th>
+                </tr>
+                <tr *ngFor="let installedSoftware of installedSoftwareList">
+                  <td style="text-align:center">{{installedSoftware.SoftwareName}}</td>
+                  <td style="text-align:center">{{installedSoftware.NewVersion}}</td>
+                  <td style="text-align:center">{{installedSoftware.NewInstalledDate}}</td>
+                  <td style="text-align:center">{{installedSoftware.NewPublisher}}</td>
+                  <td style="text-align:center">{{installedSoftware.OldVersion}}</td>
+                  <td style="text-align:center">{{installedSoftware.OldInstalledDate}}</td>
+                  <td style="text-align:center">{{installedSoftware.OldPublisher}}</td>
+                  <td style="text-align:center">{{installedSoftware.Status}}</td>
+                </tr>
+            </table>
+        </div>
+      </div>    
+      <div class="OSDetailsTableDiv" *ngIf="osDetails">
+          <div class="row">
+          <div class="col-11 tableHeading">
+            OS Details
+          </div>
+          <button type="button" class="btn btn-link collapsed col-1 btnClass" data-toggle="collapse" data-target="#OSDetailsDiv" style="text-align: right"><i class="fa fa-plus"></i></button>
+          </div>
+          <div id="OSDetailsDiv"  class="collapse in">
+            <div>
+              <table class="table">
+                <thead>
+                    <tr>
+                        <th>Computer Name</th>
+                        <th style="text-align:center">New Caption</th>
+                        <th style="text-align:center">Version</th>
+                        <th style="text-align:center">New Architecture</th>
+                        <th style="text-align:center">New Build Number</th>
+                        <th style="text-align:center">Old Caption</th>
+                        <th style="text-align:center">Old Version</th>                        
+                        <th style="text-align:center">Old Architecture</th>                        
+                        <th style="text-align:center">Old Build Number</th>                        
+                        <th style="text-align:center">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align:center">{{osDetails.ComputerName}}</td>
+                        <td style="text-align:center">{{osDetails.NewCaption}}</td>
+                        <td style="text-align:center">{{osDetails.NewVersion}}</td>
+                        <td style="text-align:center">{{osDetails.NewOsArchitecture}}</td>
+                        <td style="text-align:center">{{osDetails.NewBuildNumber}}</td>
+                        <td style="text-align:center">{{osDetails.OldCaption}}</td>                        
+                        <td style="text-align:center">{{osDetails.OldVersion}}</td>                        
+                        <td style="text-align:center">{{osDetails.OldOsArchitecture}}</td>                        
+                        <td style="text-align:center">{{osDetails.OldBuildNumber}}</td>                        
+                        <td style="text-align:center">{{osDetails.Status}}</td>
+                      </tr>
+                </tbody>
+                  
+                  
+              </table>
+            </div>
+          </div>
+        </div> 
+        <div class="ScreenResTableDiv" *ngIf="screenRes">
+            <div class="row">
+            <div class="col-11 tableHeading">
+              Screen Resolution Details
+            </div>
+            <button type="button" class="btn btn-link col-1 btnClass" data-toggle="collapse" data-target="#SRDiv" style="text-align: right"><i class="fa fa-plus"></i></button>
+            </div>
+            <div id="SRDiv"  class="collapse in">
+                <table class="table">
+                    <tr>
+                        <th style="text-align:center">New Resolution</th>
+                        <th style="text-align:center">Old Resolution</th>                        
+                        <th style="text-align:center">Status</th>
+                    </tr>
+                    <tr> 
+                      <td style="text-align:center">{{screenRes.NewSR}}</td>                   
+                      <td style="text-align:center">{{screenRes.OldSR}}</td>                      
+                      <td style="text-align:center">{{screenRes.Status}}</td>
+                    </tr>
+                </table>
+            </div>
+          </div> 
+    </div>
+    <ng-template #elseBlock>
+        <div style="text-align:center;margin: 20px;">
+          <h4 class="jumbotron" style="background-color: #33424B; text-align:center;margin: 20px;">Report not available</h4>
+        </div>
+    </ng-template>
+  </div>
+</div>

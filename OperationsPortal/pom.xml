@@ -1,0 +1,167 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>OperationsPortal</groupId>
+	<artifactId>OperationsPortal</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>OperationsPortal</name>
+	<description>OperationsPortal</description>
+  
+	<properties>
+		<failOnMissingWebXml>false</failOnMissingWebXml>
+		<spring.version>4.2.2.RELEASE</spring.version>
+		<jstl.version>1.2</jstl.version>
+		<servletapi.version>3.0</servletapi.version>
+		<slf4j.version>1.7.21</slf4j.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<solution.version>0.0.1-SNAPSHOT</solution.version>
+		<kafkaVersion>0.8.2.1</kafkaVersion>
+		<slf4j.version>1.7.21</slf4j.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
+	<build>
+    <finalName>OperationsPortal</finalName>
+
+	  <!-- <sourceDirectory>src</sourceDirectory> -->
+	  <plugins>
+	    <plugin>
+	      <artifactId>maven-compiler-plugin</artifactId>
+	      <version>3.5.1</version>
+	      <configuration>
+	        <source>1.8</source>
+	        <target>1.8</target>
+	      </configuration>
+	    </plugin>
+	    <plugin>
+	      <artifactId>maven-war-plugin</artifactId>
+	      <version>3.0.0</version>
+	      <configuration>
+	        <warSourceDirectory>WebContent</warSourceDirectory>
+	      </configuration>
+	    </plugin>
+	  </plugins>
+	</build>
+	
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.12.5</version>
+		</dependency>
+		 <dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.4-1200-jdbc41</version>
+		</dependency>
+		<dependency>
+		  <groupId>com.microsoft.sqlserver</groupId>
+		  <artifactId>mssql-jdbc</artifactId>
+		  <version>7.4.1.jre8</version>
+		</dependency>
+		<!-- ##### FOR LOGGING BEGIN ##### -->
+		<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-api</artifactId>
+		<version>1.7.7</version>
+		</dependency>
+		<dependency>
+		<groupId>ch.qos.logback</groupId>
+		<artifactId>logback-core</artifactId>
+		<version>1.2.3</version>
+		</dependency>
+		<dependency>
+		<groupId>ch.qos.logback</groupId>
+		<artifactId>logback-classic</artifactId>
+		<version>1.2.3</version>
+		</dependency>
+		<!-- ##### FOR LOGGING END ##### -->
+
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant</artifactId>
+			<version>1.8.2</version>
+		</dependency>
+		
+	  	<!--<dependency>
+			<groupId>com.infosys.niasln.adapter</groupId>
+			<artifactId>niaadapter</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency> -->
+		
+		<dependency>
+		    <groupId>com.fasterxml.uuid</groupId>
+		    <artifactId>java-uuid-generator</artifactId>
+		    <version>3.1.4</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.infosys.iapsln.adapter</groupId>
+			<artifactId>iapadapter</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka_2.10</artifactId>
+			<version>${kafkaVersion}</version>
+			<!-- <scope>provided</scope> -->
+		</dependency> 
+		
+		<dependency>
+			<groupId>com.infosys.aina.solutions</groupId>
+			<artifactId>PasswordUtility</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		
+	</dependencies>
+</project>

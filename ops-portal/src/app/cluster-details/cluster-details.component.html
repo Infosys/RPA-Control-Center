@@ -1,0 +1,82 @@
+<div class="container-fluid">
+    <div style="height: 60px;background-color: #FFFFFF; margin-left: -16px;">
+        <app-header></app-header>
+    </div>
+    <div class="row row-style" style="width:104.5%;background-color:#253138;">
+
+        <div class="nav-side-menu  float-left collapse show clearfix side-bar-div " id="demo">
+
+            <div class="input-group search-btn">
+                <input name="searchText" id="search-input" [(ngModel)]="searchValue" placeholder="Search By" type="text" (keyup)="filterClusterData($event.target.value)" class="search-input-menu">
+
+                <span class="btn btn-default rounded-0 drop-down-search-menu" id="search-btn"  name="search">
+                    <img src="assets/images/dropdown_black.png" style="padding-bottom: 5px;margin-right: 3px;" aria-expanded="true" />
+
+                </span>
+            </div>
+
+            <div class=" text-center reset-btn">
+                <img src="assets/images/reset_icon.png" aria-expanded="true" (click)="clearSearch()" />
+                <span class="sidemenu-reset" (click)="clearSearch()"> RESET</span>
+            </div>
+            <div class="cluster-list-txt" routerLink="/main/clusters">
+                CLUSTER LIST
+            </div>
+            <ul id="menu-group-1" class="nav list-group sidebar-parent-ul">
+                    <!-- <li [ngClass]="(selectedCluster==cluster.clusterName)? 'parent active list-group-item border-0 rounded-0 menu-parent-bg':'parent active list-group-item border-0 rounded-0' "
+                    *ngFor="let i=index; let  cluster of jsonClusterData  | clusterDetailsFilter : searchText" style="font-size:13px;margin-right:10px"
+                    (click)="toggleMenu(i)"> -->
+
+                <li [ngClass]="(selectedCluster==cluster.clusterName)? 'parent active list-group-item border-0 rounded-0 menu-parent-bg':'parent active list-group-item border-0 rounded-0' "
+                    *ngFor="let i=index; let  cluster of visibleClusterData"   style="font-size:13px;margin-right:10px"
+                    (click)="toggleMenu(i,cluster.clusterName)">
+                    <div style="padding-left:20px">
+
+                        <span style="padding-left:10px" >{{cluster.clusterName }}</span>
+                        <span class="float-right">
+                            <i  [ngClass]="cluster.visible? 'img-menu-minus img-menu-plus':'img-menu-minus'" class="img-menu-minus" attr.id="menu_image_{{i}}" attr.href="#sub-item-{{i}}"></i>
+                        </span>
+
+                        <ul  [ngClass]="cluster.visible? 'sub-menu list-group rounded-0 collapse show':'sub-menu collapse list-group rounded-0'"  id="sub-item-{{i}}" style="width: 109%;margin-left:-22px">
+                            <li style="padding-left: 30px;" attr.id="menu_child_{{i}}{{j}}" onclick="event.stopPropagation();" (mouseover)="mouseHoverMenu($event,i,j)"
+                                (mouseout)="mouseOutMenu($event,i,j)" [ngClass]="(selectedPortFolio==clusterChilds.portfolioName)? 'child list-group-item border-0 rounded-0 menu-li-bg':'child list-group-item border-0 rounded-0 ' "
+                                *ngFor="let j=index;let clusterChilds of cluster.clusterChild" onclick="event.stopPropagation();return false;"
+                                (click)="getPortfolioDetails(clusterChilds.portfolioName, cluster.clusterName);">
+
+                                <a href="#" onclick="event.stopPropagation();return false;" (click)="getPortfolioDetails(clusterChilds.portfolioName, cluster.clusterName);"  data-toggle="tooltip" title="{{clusterChilds.portfolioName}}" data-placement="top"> {{ (clusterChilds.portfolioName.length>20)? (clusterChilds.portfolioName | slice:0:20)+'..':(clusterChilds.portfolioName) }}
+                                    <span class="float-right">
+                                        <i attr.id="menu_child_img_{{i}}{{j}}" [ngClass]="(selectedPortFolio==clusterChilds.portfolioName)? 'img-menu-arrow':''"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div [ngClass]="isMenuCollapsed =='false' ? 'sidebar-toggle-open clearfix' : 'sidebar-toggle-close clearfix'">
+            <div class="page-menu">
+                <ul id="clothing-nav" class="nav nav-tabs page-menu-ul" role="tablist">
+                    <li class="nav-item ">
+                        <a class="nav-link roboto-light active " routerLink="/main/health" id="home-tab" role="tab" data-toggle="tab" aria-controls="home"
+                            aria-expanded="true" (click)="getPortfolioDetailsMoniterHealth()">Monitor Health</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link roboto-light" routerLink="/main/configuration" role="tab" id="hats-tab" data-toggle="tab" aria-controls="hats">Configuration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link roboto-light" routerLink="/main/kpi-report" role="tab" id="hats-tab" data-toggle="tab" aria-controls="hats">Metric/KPI Report</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link roboto-light" routerLink="/main/es-report" role="tab" id="hats-tab" data-toggle="tab" aria-controls="hats">Environment Scan Report</a>
+                    </li>
+                </ul>
+            </div>
+            <router-outlet></router-outlet>
+            <div>
+            </div>
+        </div>
+        <div class="footer-style">
+            Copyright &copy; 2018 | Infosys | AI and Automation Services
+        </div>
+    </div>

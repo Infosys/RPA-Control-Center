@@ -1,0 +1,205 @@
+<!-- <app-loader *ngIf="isloader"></app-loader> -->
+<div class="row " style="width:102.23% ;height:20px;background-color: #253138;padding-top: 10px;   " >
+    <span class="port-div" style="margin-left: 30px;" >{{portfolioId}}</span><span  class="port-div" style="margin-left:5px;margin-right:5px">:</span> <span class="port-div">View Graph</span>
+  </div>
+<div id="sub_header" class="row clearfix" style="width:102.23% ;height:60px;background-color: #253138; border-bottom: 1px solid #86888a; overflow-x: hidden;">
+   
+<div class="row">
+  <div class="col-md-4">
+      <button class="btn-select cursor-pointer " (click)="loadData()" data-toggle="modal"
+      data-target="#exampleModal" >
+          SELECT COMPONENT/PARAMETER
+        </button>
+        <button class="btn-reset cursor-pointer" (click)="resetData()">
+          RESET
+        </button>
+        <!-- <div> dta:
+          {{lineChartJsonDummy}}
+        </div> -->
+  </div>
+  <div class="col-md-3">
+  </div>
+
+    <div style="margin-left: 982px; margin-top: -28px;">
+      <div style="height: 25px; width: 180px; position: absolute; margin-left: 110px;">
+        <angular2-date-picker [(ngModel)]="toDate" (onDateSelect)="onDateChangedPage($event,'to')"  name="fromdate_page" [settings]="settings"></angular2-date-picker>
+      </div>
+      <div style="height: 25px; width: 180px; position: absolute; margin-left: -80px;">
+          <angular2-date-picker [(ngModel)]="fromDate" (onDateSelect)="onDateChangedPage($event,'from')" name="todate_page"  [settings]="settings"></angular2-date-picker>
+      </div>
+      <!-- <div style="height: 25px; width: 132px; position: absolute; margin-left: 152px;">
+              <my-date-picker [selDate]="selDate"  (dateChanged)="onDateChangedPage($event,'to')"  name="fromdate_page" [options]="myDatePickerOptions"
+          required></my-date-picker>
+        </div>
+        <div style="height: 25px; width: 132px; position: absolute;">
+          <my-date-picker [selDate]="selDate" (dateChanged)="onDateChangedPage($event,'from')" name="todate_page" [options]="myDatePickerOptions"
+          required></my-date-picker>
+        </div> -->
+          <div>
+              <button class="btn-apply cursor-pointer" (click)="getDataOfDatesPage()"  style="position: absolute;">
+                  APPLY
+                </button>
+          </div>  
+    </div>
+
+</div>
+
+</div>
+<div id="sub_header_graph" class="row clearfix" style="width:102.23% ;height:60px;background-color: #253138;display: none ">
+  <div class="row">
+  <div class="popup-div col-md-4" >
+      <span class="popup-txt">Server :</span>
+      <span class="popup-txt">{{resourceName}}</span> <br>
+      <span class="popup-txt">Parameter :</span>
+      <span class="popup-txt">{{obsName}}</span>
+  </div>
+  <div class="col-md-3">
+
+    </div>
+      <div style="margin-left: 975px; margin-top: -34px;">
+          <div style="height: 25px; width: 180px; position: absolute; margin-left: 110px;">
+              <angular2-date-picker [(ngModel)]="toDate" (onDateSelect)="onDateChanged($event,'to')"  name="fromdate_graph" [settings]="settings"></angular2-date-picker>
+            </div>
+            <div style="height: 25px; width: 180px; position: absolute; margin-left: -80px;">
+                <angular2-date-picker [(ngModel)]="fromDate" (onDateSelect)="onDateChanged($event,'from')" name="todate_graph"  [settings]="settings"></angular2-date-picker>
+            </div>
+          <!-- <div style="height: 25px; width: 132px; position: absolute; margin-left: 152px;"><my-date-picker  [selDate]="selDate" (dateChanged)="onDateChanged($event,'to')"  name="fromdate_graph" [options]="myDatePickerOptions"
+            required></my-date-picker></div>
+          <div style="height: 25px; width: 132px;"><my-date-picker (dateChanged)="onDateChanged($event,'from')" [selDate]="selDate" name="todate_graph" [options]="myDatePickerOptions"
+            required></my-date-picker></div> -->
+            <div>
+                <button class="btn-apply cursor-pointer" (click)="getDataOfDates()"  style="position: absolute;">
+                    APPLY
+                  </button>
+            </div>  
+      </div>
+
+    </div>
+</div>
+<div class="row clearfix" style="background-color:#253138">
+  <div id="graph_popup_div"  style="display: none;" class="clearfix graph_popup popup-border">
+
+    <canvas class="float-left " id="mycanvas" > </canvas>
+
+    <img id="popupPageMin" style="cursor:pointer" (click)="showPopup('false',[],[],'','','','','','','')" src="assets/images/minimize.png">
+  </div>
+  <div id="side_page" class="clearfix sidegraph" style="width:238px ;height: 536px;  background-color:#33424B;overflow-y: auto; padding-top: 10px;">
+
+    <div *ngFor="let i=index;let list of lineChartJson " style="padding-top: 2px; padding-bottom: 10px;">
+      <div class="containerbox" id='side_graph_{{i}}' style="cursor:pointer;">
+  <div><span class="text-limit float-left"  data-toggle="tooltip"
+    data-placement="top" title="{{list.resourceName}}"> {{list.resourceName}} </span> <span  data-toggle="tooltip"
+    data-placement="top" title="{{list.observable}}" class="text-limit" >  {{list.observable}}</span></div> 
+        <div style="background-color: #253138 ; ">
+      <!-- <button  style="border-radius: 50%"> -->
+          <img id="y" (click)="hideSideGraph(i)" style="cursor:pointer" src="assets/images/close_graph.png">
+          <!-- </button> -->
+          <canvas class="float-left" (click)="showGraphDiv(i,list.observableValue,list.thresholdValue,list.currentDate,list.resourceId,list.observable,'OBS_CPU_UTIL',list.unitOfMeasure,list.upperthresholdValue)" [options]="options_side"  baseChart [data]="[list.observableValue,list.thresholdValue,list.upperthresholdValue]"
+            [labels]="list.currentDate" [chartType]="lineChartType" [colors]="lineChartColors_side" [legend]="false" draggable="true"> </canvas>
+
+        </div>
+       
+      </div>
+
+    </div>
+  </div>
+
+  <div id="content_page" style="background-color: #253138;width:81% ;height: 535px; overflow-y: auto;border-radius: 2px solid ">
+
+    <div *ngFor="let i=index;let list of lineChartJson " style="background-color: #253138;">
+       <div class=" pagegraph_border" id='sub_graph_{{i}}' style="display: none; padding-top: 10px;" > 
+          <img id="x" (click)="hideGraphDiv(i)" style="cursor:pointer" src="assets/images/close_graph.png">
+        <div class="container pagegraph" >
+            <div class="graph_label">
+                {{ list.resourceName }} &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;  {{ list.observable }}
+              </div>  
+       
+        <!-- <li class="list-group-item pagegraph "  style="width:99%;height:205px;background-color: #253138"> -->
+        <div id='sub_graph_canvas_{{i}}'>
+          <canvas class="float-left"  id='sub_graph_canvas_id_{{i}}'
+      
+           > </canvas>
+
+        </div>
+
+        <!-- </li> -->
+        <img id="popupPageMax" (click)="showPopup('true',list.observableValue,list.thresholdValue,list.currentDate,list.resourceId,list.observable,list.observableId,list.unitOfMeasure,list.upperthresholdValue,list.resourceName)" src="assets/images/maximize.png" style="cursor:pointer">
+     
+      </div>
+ </div> 
+
+    </div>
+
+
+  </div>
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #253138;margin-top:35%">
+            <div class="modal-header">
+                <table>
+                    
+                    <tr>
+                            <td colspan="3">
+                                    <div class="input-group ">
+                                            <input name="searchText"  id="search-input"  [(ngModel)]="searchValue"  (keyup)="searchComponent($event.target.value)" style="width: 158px;padding-left: 8px;padding-top: 0px;" placeholder="Search Component" type="text"  class="search-input-menu popup-input">
+                            
+                                            <span class=" rounded-0 drop-down-search-menu " style="background-color: #33424B;" id="search-btn"  name="search">
+                                                <img src="assets/images/reset_icon.png" (click)="clearSearch()" style="margin-right: 9px;cursor: pointer" aria-expanded="true" />
+                            
+                                            </span>
+                                        </div>
+                                    
+                                </td>
+                
+                    </tr>
+                </table>
+
+            </div>
+            <div class="modal-body table-responsive" style="background-color: #253138;height: 300px;">
+               <div class="float-left" style="height:200px;overflow-y: auto;width: 50%;">
+                <table>
+                   <!-- *ngIf="i%3 == 0" -->
+                  <tr *ngFor="let i=index;let row of rowList">
+                      
+                    <td *ngFor="let j=index; let component of row">
+                      <button  [ngClass]="component.selected?(component.current?'filter-data btn-component-fill':'filter-data btn-component'):(component.current?'filter-data btn-component-fill':'filter-data btn-component-ini')"  id="comp_{{i}}{{j}}" (click)="selectComponent($event.target.id,component)"  data-toggle="tooltip"
+                      data-placement="top" title="{{component.resourceName}}" >{{component.resourceName}}</button>
+                    </td>
+                    
+                  </tr>
+              </table>
+               </div>
+             <div  style=" border: 1px solid #ADB1b4;margin-left: 376px; ">
+              <table  *ngIf="showParameters" >
+                <tr >
+                  <td class="avail-params">
+                    Available Parameters
+                  </td>
+                </tr>
+                <tr  *ngFor="let i=index;let observation of componentParameters.observations">                  
+                  <td>
+                    <span style=" margin-right: 7px;margin-left: 10px;">
+                      <i     attr.id="{{i}}" [ngClass]="observation.selected?'img-tbl-chk':'img-tbl-unchk'"  (click)="selectParameter(observation)" style="cursor: pointer;"></i>
+                    </span>
+                    <span  class="params-txt">{{observation.observableName}}</span>
+                  </td>
+                </tr>
+              </table>
+             </div>
+               
+            </div>
+            <div class="modal-footer">
+                    <button class="btn-cancel  cancel-btn  cursor-pointer"   role="button"  
+                    data-dismiss="modal"  (click)="cancelModal()"> CANCEL </button>
+                    <button class="add-box  cursor-pointer" (click)="popupOk()"  style=" cursor: pointe;;margin-left: 20px;border-color: #00A8FF;border-style: solid;" role="button" data-toggle="modal"
+                    data-dismiss="modal"> OK </button>
+                   
+                
+            </div>
+        </div>
+    </div>
+</div>
+  <div class="footer-style">
+    Copyright &copy; 2018 | Infosys | AI and Automation Services
+  </div>
+</div>

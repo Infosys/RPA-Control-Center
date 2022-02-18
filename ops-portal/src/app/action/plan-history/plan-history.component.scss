@@ -1,0 +1,103 @@
+.select-box{
+   
+    font-size: 13px;
+    color: #000000;
+    width: auto;
+    height: 25px;
+    background-color: #00A8FF;
+    text-align: center;
+    margin-right: 15px;
+    border: 1px solid #00A8FF;
+    border-radius: 2px;
+    
+}
+::ng-deep .table-striped tbody tr {
+    background-color: #33424B!important;
+    color: #DDDDDD !important;
+}
+::ng-deep .modal-dialog{
+    max-width: 624px !important;
+    margin: 4.75rem auto;
+    margin-top: -463px;
+    margin-left: -173px;
+     
+  }
+
+  ::ng-deep .ng2-smart-titles{
+    background-color:#33424B!important;
+    font-size:14px;
+    color: #DDDDDD !important;
+}
+/* Safari style for pegination */
+ng2-smart-table-pager.ng2-smart-pagination {
+    display: -webkit-box;
+}
+/*To reduce height of search field*/
+::ng-deep ng2-smart-table thead > tr:nth-child(2) > th  { 
+    padding: 0px;
+}  
+::ng-deep ng2-smart-table tbody > tr > td:nth-child(1) { 
+    width:15% !important;
+    word-wrap: break-word !important;
+ 
+}
+ ::ng-deep ng2-smart-table tbody > tr > td:nth-child(2) { 
+    width: 26% !important;
+    word-wrap: break-word !important;
+}
+ ::ng-deep ng2-smart-table tbody > tr > td:nth-child(3) { 
+     width: 28% !important;
+    word-wrap: break-word !important;
+}
+ ::ng-deep ng2-smart-table tbody > tr > td:nth-child(4) { 
+    width: 25% !important;
+    word-wrap: break-word !important;
+}
+ ::ng-deep ng2-smart-table tbody > tr > td:nth-child(5) { 
+    width: 15% !important;
+    word-wrap: break-word !important;
+}
+//  ::ng-deep ng2-smart-table tbody > tr > td:nth-child(6) { 
+//     width: 10% !important;
+//     word-wrap: break-word !important;
+// }
+
+// tree view styles
+ ::ng-deep .node-content-wrapper {
+  
+    color: red !important;
+    background-color: blue !important;
+}
+
+  ::ng-deep.node-content-wrapper-active, .node-content-wrapper.node-content-wrapper-active:hover, .node-content-wrapper-active.node-content-wrapper-focused {
+    background: #beebff !important;
+}
+::-webkit-scrollbar {
+    width: 04px;
+  
+    background-color: #ffffff ;
+    border: 0px ;
+  }
+  
+  ::-webkit-scrollbar-track {
+    // -webkit-box-shadow: inset 0 0 4px #33424B; 
+    border-radius: 5px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+  
+    background-color:#4A5C68;
+  }
+   ::ng-deep .view-cell-eventId{
+    cursor:pointer;
+    text-decoration:underline;
+    color:#00A8FF;
+    cursor: pointer; 
+    width:75px !important;
+    max-width:75px !important;
+    overflow: hidden;
+    text-overflow:ellipsis;
+     white-space: nowrap;
+     display:block;
+} 

@@ -1,0 +1,4 @@
+driverClassName=org.postgresql.Driver
+jdbcURL=jdbc:postgresql://localhost:5432/ops_portal_hchk
+username=postgres
+password=postgres

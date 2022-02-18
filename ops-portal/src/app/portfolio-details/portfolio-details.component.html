@@ -1,0 +1,70 @@
+<div class="ham-menu " >
+    <a href="#" (click)="navigateToCLusters()" onclick="return false;"><span  class="ham-menu-txt ham-color" style="cursor:pointer" >All Clusters</span></a>
+     <span class="ham-menu-arrow ">  <img src="assets/images/breadcrum_arrow.png" >  </span>
+    <span class="ham-menu-txt-disabled">{{clusterId}}</span> 
+   
+</div>
+<div style="background-color: #253138;height: 40px;; width:1039px; margin-top:10px">
+<div class="portfolio-txt float-left"> Portfolios</div>
+<div class="float-right">
+<table>                
+    <tr>
+        <td>
+            <div >
+                <button class="btn   dropdwn-btn dropdown-toggle " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 Filters
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: #33424B;width: auto">
+                   
+                    <a class="dropdown-item  filter-txt" onclick="event.stopPropagation();" > <span class="cursor-pointer" > <i style="margin-left: -16px; margin-right: 5px;" class="img-tbl-unchk" (click)="filterBy('healthy')"  id="popup_health_h"></i></span>Healthy</a>
+                    <a class="dropdown-item  filter-txt" onclick="event.stopPropagation();" > <span class="cursor-pointer"> <i style="margin-left: -16px; margin-right: 5px;" class="img-tbl-unchk" (click)="filterBy('Critical')" id="popup_health_c"></i></span>Critical</a>
+                    <a class="dropdown-item  filter-txt" onclick="event.stopPropagation();"  > <span class="cursor-pointer"> <i style="margin-left: -16px; margin-right: 5px;" class="img-tbl-unchk" (click)="filterBy('Warning')" id="popup_health_w"></i></span>Warning</a>
+                </div>  
+            </div>
+             
+        </td>
+        <td >
+            <div class="input-group ">
+                <input name="searchText"  [(ngModel)]="searchValue" id="search-input" (keyup)="searchComponent($event.target.value)" style="width: 158px;padding-left: 8px;padding-top: 0px;" placeholder="Search Component" type="text"  class="search-input-menu popup-input">
+            
+                <span class=" rounded-0 drop-down-search-menu " style="background-color: #33424B;" id="search-btn"  name="search">
+                <img src="assets/images/reset_icon.png" (click)="clearSearch()" style="margin-right: 9px;cursor: pointer" aria-expanded="true" />
+            
+                </span>
+            </div>
+                    
+        </td>
+    </tr>
+</table>
+</div>
+
+</div>
+<div class="table-responsive row" id="table_health" style="background-color: #33424B;overflow-y: auto;height: 388px;; width:1020px;margin-left:20px; margin-bottom:20px">
+    <div style="padding-left: 15px; padding-top: 20px; width:1000px">
+  
+        <table data-toggle="table" data-show-toggle="true" data-show-columns="true" id="eventsTable" style="width: 100%;">
+            <thead>
+                <tr style="background-color: #253138;height:35px;">
+                    <td (click)="sortBy('portfolioId')"  style="padding-left:20px;" >Portfolio <img  style="margin-left: 5px;" src="assets/images/up-and-down-arrow.png"></td>
+                    <td (click)="sortBy('componentCount')" >Component <img  style="margin-left: 5px;" src="assets/images/up-and-down-arrow.png"></td>
+                    <td (click)="sortBy('status')" >Health <img  style="margin-left: 5px;" src="assets/images/up-and-down-arrow.png"></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let portfolio of portfolioDetails">
+                    <td> <span class="component-data" (click)="navigateToPortfolio(portfolio.portfolioId)">{{ portfolio.portfolioId }}</span></td>
+                    <td style="padding-left:20px"> {{ portfolio.componentCount }}</td>
+                    <td><div class="{{ portfolio.status }}"> </div></td>
+                </tr>  
+            </tbody>
+        </table>
+    </div>
+    <!-- <div class="pagination">
+            <a class="active">1</a>
+            <a>2</a>
+            <a>3</a>
+            <a>4</a>
+            <a>5</a>
+            <a>&gt;</a>
+    </div> -->
+  </div>

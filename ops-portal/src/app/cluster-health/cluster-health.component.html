@@ -1,0 +1,107 @@
+<div class="ham-menu">
+    <span class="ham-menu-txt">All Clusters</span>
+
+</div>
+<div class="cluster-health-txt">Cluster Health Overview</div>
+<div class="row" style="padding-top: 20px;padding-left:20px;">
+    <div (click)="filterMainTable('all')" style="width: 390px;margin-left:5px;cursor: pointer">
+        <div class="card float-left image-card rounded-0" style="width:150px;height:150px;background-color: #33424B;margin-left:10px">
+            <canvas class="float-left" id="tot_canvas"  style="display: block;width: 120px;height: 120px;">
+            </canvas>
+        </div>
+        <div class="card content-card rounded-0" style="width: 230px;height: 150px; ">
+            <table style="width: 222px;height: 125px; background-color: #33424B;  margin-top: 10px " class="total ">
+
+                <tr>
+                    <td class="total-txt">
+                        Total
+                    </td>
+                    <td class="card-number">
+                        {{ ("00"+jsonClusterDetails.totalCount).slice(-2) }}
+                    </td>
+
+                </tr>
+                <hr style="background-color: #677176; size: 1px; margin-left: 5%;margin-top: 1%;margin-bottom: 1%;width:116%">
+                <tr class="card-text">
+                    <td class="card-text">Critical</td>
+                    <td class="card-number">{{ ("00"+jsonClusterDetails.criticalCount).slice(-2) }}</td>
+                </tr>
+                <tr class="card-text">
+                    <td class="card-text">Warning</td>
+                    <td class="card-number">{{ ("00"+jsonClusterDetails.warningCount).slice(-2) }}</td>
+                </tr>
+                <tr class="card-text">
+                    <td class="card-text">Healthy</td>
+                    <td class="card-number">{{ ("00"+jsonClusterDetails.healthyCount).slice(-2) }}</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+    <div (click)="filterMainTable('critical')" style="width: 310px;margin-left:10px;cursor: pointer">
+        <div class="card float-left image-card rounded-0" style="width:150px;height:150px;background-color: #33424B;margin-left:10px">
+            <canvas class="float-left" id="critical_canvas"  style="display: block;width: 120px;height: 120px;"> </canvas>
+        </div>
+        <div class="card content-card rounded-0" style="width: 150px;height: 150px; ">
+            <div>
+                <div class="total-txt" style="margin-top: 20px;margin-left: 10px;">Critical </div>
+                <hr class="hr-line">
+                <div class="card-content-value display-4" style="margin-left: 20px;color:#ffffff"> {{ ("00"+jsonClusterDetails.criticalCount).slice(-2) }}</div>
+            </div>
+        </div>
+
+    </div>
+    <div (click)="filterMainTable('warning')" style="width: 310px;margin-left:10px;cursor: pointer">
+        <div class="card float-left image-card rounded-0" style="width:150px;height:150px;background-color: #33424B;margin-left:10px">
+            <canvas class="float-left"  id="warning_canvas" style="display: block;width: 120px;height: 120px;"> </canvas>
+        </div>
+        <div class="card content-card rounded-0" style="width: 150px;height: 150px; ">
+            <div>
+                <div class="total-txt" style="margin-top: 20px;margin-left: 10px;">Warning </div>
+                <hr class="hr-line">
+                <div class="card-content-value display-4" style="margin-left: 20px;color:#ffffff"> {{ ("00"+jsonClusterDetails.warningCount).slice(-2) }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="table-responsive row" id="table_health" style="background-color: #33424B;overflow-y: auto;height: 209px;; width:1020px;margin-left:20px; margin-top:20px;margin-bottom: 20px;">
+    <div style="padding-left: 20px; padding-top: 20px; width:1000px">
+
+        <table data-toggle="table" data-show-toggle="true" data-show-columns="true" id="eventsTable" style="width: 100%;">
+            <thead>
+                <tr style="background-color: #253138;height:35px;">
+                    <td (click)="sortBy('clusterName')" style="padding-left:20px">Cluster
+                        <img style="margin-left: 5px;" src="assets/images/up-and-down-arrow.png">
+                    </td>
+
+                    <td (click)="sortBy('clusterState')">Health
+                        <img style="margin-left: 5px;" src="assets/images/up-and-down-arrow.png">
+                    </td>
+                    <td (click)="sortBy('portfolioCount')">Portfolio
+                        <img style="margin-left: 5px;" src="assets/images/up-and-down-arrow.png">
+                    </td>
+                    <td (click)="sortBy('criticalCount')">Critical
+                        <img style="margin-left: 5px;" src="assets/images/up-and-down-arrow.png">
+                    </td>
+                    <td (click)="sortBy('warningCount')">Warning
+                        <img style="margin-left: 5px;" src="assets/images/up-and-down-arrow.png">
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cluster of jsonClusterData">
+                    <td>
+                        <span (click)="navigateToCluster(cluster.clusterName)" class="component-data">{{ cluster.clusterName }}</span>
+                    </td>
+                    <td>
+                        <div class="{{ cluster.clusterState }}"> </div>
+                    </td>
+                    <td style="padding-left: 20px;"> {{ ("00"+cluster.portfolioCount).slice(-2) }}</td>
+                    <td style="padding-left: 20px;">{{ ("00"+cluster.criticalCount).slice(-2) }}</td>
+                    <td style="padding-left: 20px;">{{ ("00"+cluster.warningCount).slice(-2) }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

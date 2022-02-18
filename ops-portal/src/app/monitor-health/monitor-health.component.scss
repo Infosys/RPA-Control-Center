@@ -1,0 +1,102 @@
+.card-bg{
+    background-color: rgb(28, 96, 197)
+  }
+  
+  .image-card{
+    margin-right: 0px;
+    margin-left: 20px;
+    width: 100px;
+    height: 150px;
+  }
+  .content-card{
+    margin-left: 0px;
+    height: 150px;
+    width: 226px;
+    background-color: #33424B;
+    flood-color: #BFC2C4
+    
+  }
+  
+  .display-6 {
+    font-size: 14px;
+    font-family: 'Roboto',sans-serif !important; 
+  font-weight: 300 !important;
+    color: #BFC2C4;
+    
+  }
+  .content-style{
+    font-size: 14px;
+    color: #BFC2C4;
+    font-family: 'Roboto',sans-serif !important; 
+    font-weight: 500 !important;
+     /* font-family: 'Roboto Medium';  */
+  }
+
+  .card-content-title{
+    font-family: 'Roboto',sans-serif !important; 
+    font-weight: 300 !important;
+    font-size: 16px;
+    color: #FFFFFF;
+    padding-top: 5px;
+    padding-left: 10px;
+  }
+.ham-color:hover{
+    color: #00A8FF !important; 
+  }
+ 
+  .card-content-value{
+    font-family: 'Roboto',sans-serif !important; 
+  font-weight: 300 !important;
+    font-size: 60px;
+    padding-left: 10px;
+  }
+
+  .display-4 {
+    font-size: 60px;
+    font-family: 'Roboto',sans-serif !important; 
+    font-weight: 300 !important;
+    margin-top: -5px;
+    
+  }
+  div:focus{
+    outline: none;
+  }
+  /* input:focus + div { outline: none; } */
+  .image-content{
+    padding-left: 20px;
+    padding-bottom: 20px;
+    font-family: 'Roboto',sans-serif !important; 
+    font-weight: 400 !important;
+    font-size: 10px;
+    color: #FFFFFF;
+  }
+  .ham-menu-arrow{
+    font-size: 13px;
+    color: #9D9C9C;
+    margin-right: 5px;
+    margin-left:5px;
+  }
+  .ham-menu-txt{
+    color: #FFFFFF;
+    font-size: 13px;
+    padding-left: 20px;
+    font-family: 'Roboto',sans-serif !important;
+     font-weight: 300 !important;
+  }
+  .ham-menu-txt-middle{
+    color: #FFFFFF !important;
+    font-size: 13px;
+    padding-left: 2px;
+    font-family: 'Roboto',sans-serif !important;
+     font-weight: 300 !important;
+  }
+ .ham-menu-txt-disabled{
+    color: #9D9C9C;
+    font-size: 13px;
+    font-family: 'Roboto',sans-serif !important;
+     font-weight: 300 !important;
+  }
+  .ham-menu{
+    padding-top:25px;
+    padding-bottom:20px;
+  }

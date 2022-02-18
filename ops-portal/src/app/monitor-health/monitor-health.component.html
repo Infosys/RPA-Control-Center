@@ -1,0 +1,98 @@
+
+<div class="ham-menu" >
+        <a href="#" (click)="navigateToCLusters()" onclick="return false;"> 
+        <span  class="ham-menu-txt ham-color" >All Clusters</span></a>
+        <span class="ham-menu-arrow">  <img src="assets/images/breadcrum_arrow.png" >  </span>
+        <a href="#" (click)="navigateToPortfolio(clusterName)" onclick="return false;"> <span  class=" ham-color ham-menu-txt-middle " >{{ clusterName }}</span></a>
+    <span class="ham-menu-arrow">  <img src="assets/images/breadcrum_arrow.png" >  </span>
+    <span class="ham-menu-txt-disabled">{{ portfolioName }}</span>
+</div>
+<div class="container-fluid" style="padding-bottom:20px">
+    <div class="row" style="margin-block-start: 20px">
+        <div  (click)="setValues()">
+            <div class="card float-left image-card rounded-0" style="background-color:#05AAA0;cursor: pointer;">
+                <img src="assets/images/Component-Health.png" style="padding-top: 35px; padding-left: 10px; padding-right: 10px; width: 100%;">
+
+                <div style="margin-left: 18px;cursor: pointer;">
+                    <p class="image-content" style="padding-top: 15px;">
+                        VIEW
+                    </p>
+                </div>
+            </div>
+            <div class="card content-card rounded-0" style="cursor:pointer">
+
+                <div>
+                    <div class="card-content-title">Component Health </div>
+                    <div class="card-content-value display-4" style="color: #05AAA0;"> {{ ("00"+countOfChecks).slice(-2) }} </div>
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <div style="padding-left: 11px" class="display-6">Critical</div>
+                            <span class="content-style" style="margin-left: 9px;">{{ ("00"+criticalCount).slice(-2) }} </span>
+                        </div>
+                        <div class="col-4">
+                            <div class="display-6" style=" margin-left:-10px;">Warning</div>
+                            <span class="content-style" style="margin-left: -8px;">{{ ("00"+warningCount).slice(-2) }}</span>
+                        </div>
+                        <div class="col-4">
+                            <div class="display-6" style=" margin-left:-8px;">Healthy</div>
+                            <span class="content-style" style="margin-left: -8px;">{{ ("00"+healthyCount).slice(-2) }}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="card float-left image-card rounded-0 " style="background-color:#15B5FF;cursor: pointer">
+                <img src="assets/images/Open-Tickets.png" style="padding-top: 35px; padding-left: 10px; padding-right: 10px; width: 100%;">
+
+                <div style="margin-left: 18px">
+                    <p class="image-content" style="padding-top: 20px;">VIEW</p>
+                </div>
+            </div>
+            <div class="card content-card rounded-0" style="cursor: pointer">
+
+                <div class="card-block">
+                    <div class="card-content-title">Open Tickets </div>
+                    <div class="card-content-value display-4" style="color: #15B5FF;"> {{ ("00"+ticketCount).slice(-2) }} </div>
+                    <div class="row text-center">
+                        <div class="col-6">
+                            <div class="display-6 ">Automation</div>
+                            <span class="content-style">{{ ("00"+automationTicketCount).slice(-2) }}</span>
+                        </div>
+                        <div class="col-5">
+                            <div class="display-6 ">Manual</div>
+                            <span class="content-style">{{ ("00"+manualTicketCount).slice(-2) }}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="card float-left image-card rounded-0" style="background-color: #FF3245;cursor: pointer">
+                <img src="assets/images/Log-Errors.png" style="padding-top: 35px; padding-left: 15px; padding-right: 15px; width: 100%;">
+
+                <div style="margin-left: 18px">
+                    <p class="image-content" style="padding-top: 20px;">VIEW</p>
+                </div>
+            </div>
+            <div class="card content-card rounded-0" style="cursor: pointer">
+
+                <div class="card-block">
+                    <div class="card-content-title">Log Errors </div>
+                    <div class="card-content-value display-4" style="color: #FF3545;"> {{ ("00"+errorLogCount).slice(-2) }} </div>
+                    <div class="row text-center">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row" style="margin-bottom: 267px">
+        <div class="col-sm-4"></div>
+
+    </div>
+</div>

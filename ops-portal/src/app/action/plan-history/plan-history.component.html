@@ -1,0 +1,40 @@
+<div style="margin-left: 686px;margin-bottom: 5px ; ">
+  <button class="select-box" style="cursor: pointer;"  (click)="handleClickMe({flag: 'block', id: ''})">Back</button>
+</div>
+<div style="height:430px;width:740px;margin-left: 5px; overflow-y: auto">
+  <ng2-smart-table [settings]="settings"  [source]="planHistory"  (selectionChanged)="onSelectionChanged($event)" 
+ ></ng2-smart-table> 
+
+ 
+
+
+</div>
+
+
+
+<!-- <div  id="myModal" class=" modal modal-backdrop fade show"   [style.display]="showModal ? 'block' : 'none'">
+  <div class="modal-dialog" style="display: block; background-color:black" [style.display]="showModal ? 'block' : 'none'">
+    <div class="modal-content" >
+
+     
+      <div class="modal-header">
+        <h4 class="modal-title">Logs</h4>
+        <button type="button" class="close" (click)="closeLogs()" data-dismiss="modal">&times;</button>
+      </div>
+
+     
+      <div class="modal-body">
+       
+      </div>
+
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="closeLogs()" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div> -->
+
+
+

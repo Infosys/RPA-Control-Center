@@ -1,0 +1,95 @@
+$borderRadius:4px;
+
+.pageContainer{
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    background-color: #253138;
+    color: #FFFFFF;
+    font-family: 'Roboto',sans-serif !important;
+    font-size: 13px;
+
+    .card{
+        background-color: #33424B;
+        border-radius: 3px;
+    }
+
+    label{
+        display: inline-block;
+        text-align: left;
+        padding: 5px 0;
+        margin-bottom: 0;        
+    }
+    select{
+        display: inline-block;
+        text-align: right;
+        font-size: 13px;
+        height: 35px;
+        padding: 3px;
+    }
+    .row{
+        margin: 8px 0;
+    }
+    button, input[type=date]{
+        border-radius: $borderRadius;
+    }
+    input[type=date]{
+        border-radius: $borderRadius;
+        width: 100%;
+        height: 35px;
+        padding: 3px;
+    }
+    .tableContainer{  
+        margin-top: 10px;  
+        padding: 0 10px;     
+        /*.table-responsive{
+            tbody {
+                td{
+                font-size: 13px;
+                color:#FFFFFF;
+                font-family: 'Roboto',sans-serif !important;
+                font-weight:400 !important;
+                }        
+            }
+            tr{
+                height: 35px;
+                border-bottom: 1px solid #253138;
+                font-size: 13px;
+            }  
+            thead{ 
+                th{
+                    font-size: 13px;
+                    color:#FFFFFF;
+                    font-family: 'Roboto',sans-serif !important;
+                    font-weight:500 !important;
+                    
+                }
+            } 
+        }  */ 
+        .tableHeading{
+            padding-top: 6px;
+            padding-bottom: 6px;
+            font-size: 15px;
+        }          
+            
+        table {
+            border: #253138 solid 0px;            
+            th{
+                font-weight:normal;
+                text-align: center;
+                font-family: 'Roboto',sans-serif !important;
+                color:#FFFFFF;
+                background-color: #253138;
+                border: none;
+                font-size: 13px;
+            }
+            td{
+                border: none;
+            }            
+        }
+        
+    }
+
+}
+
+

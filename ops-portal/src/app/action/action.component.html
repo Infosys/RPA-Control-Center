@@ -1,0 +1,488 @@
+<app-loader *ngIf="isloader"></app-loader>
+<div class="container-fluid" style="width:100%">
+  <div style="padding-top:12px;padding-left: 5px">
+    <a href="#" routerLink="/main/clusters" onclick="return false;">
+      <span class="component-health-menu ham-menu ham-color">All Clusters</span>
+    </a>
+
+    <span class="arrow-menu"><img src="assets/images/breadcrum_arrow.png"> </span>
+    <a href="#" (click)="navigateToPortfolio(clusterName)" onclick="return false;">
+      <span class="component-health-menu ham-menu ham-color">{{clusterName}}</span>
+    </a>
+
+    <span class="arrow-menu"><img src="assets/images/breadcrum_arrow.png"> </span>
+    <a href="#" (click)="navigateToMoniterHealth()" onclick="return false;">
+      <span class="component-health-menu ham-menu ham-color">{{portfolioName}}</span>
+    </a>
+    <span class="arrow-menu"><img src="assets/images/breadcrum_arrow.png"> </span>
+    <a href="#" (click)="navigateToComponentHealth()" onclick="return false;">
+      <span class="component-health-menu ham-menu ham-color">Component Health</span>
+    </a>
+    <span class="arrow-menu"><img src="assets/images/breadcrum_arrow.png"> </span>
+    <span class="component-health-menu ham-menu-disabled" style="color: #9d9c9c;">Action</span>
+  </div>
+
+  <div style="margin-bottom:10px;margin-top:10px;margin-left: 5px;height:500px">
+    <div style="margin-bottom:15px"><span class="health-sum " style="margin-left: 0px;">Health Summary</span> <span
+        class="health-sum " style="margin-left: 207px;">{{title}}</span></div>
+    <div class="left-div-main">
+      <div class="left-div">
+        <table style="width: 289px;height: 200px;">
+          <tr>
+            <td class="th-text">Component</td>
+            <td class="th-text">{{resourceId}}</td>
+          </tr>
+          <tr>
+            <td class="th-text">Parameter</td>
+            <td class="th-text tool-tip" data-toggle="tooltip" data-placement="top" title="{{jsonComponent.observableName}}">{{jsonComponent.observableName}}</td>
+          </tr>
+          <tr>
+            <td class="th-text">Parameter health</td>
+            <td class="th-text">
+              {{jsonComponent.serverState}}
+
+            </td>
+          </tr>
+          <tr>
+            <td class="th-text">Recorded Value</td>
+            <td class="th-text">{{jsonComponent.value}}</td>
+          </tr>
+          <tr>
+            <td class="th-text">Recorded Time</td>
+            <td class="th-text">{{jsonComponent.observationTime | date: "dd MMM yy | hh:mm a"}}</td>
+          </tr>
+          <tr>
+            <td class="th-text">Threshold</td>
+            <td class="th-text">{{jsonComponent.threshold}}</td>
+          </tr>
+        </table>
+        <div class="float-right" style="margin-top: 10px;"><button class="select-box">VIEW SIMILAR INSTANCES</button></div>
+      </div>
+      <div style="float:left;margin-top:10px"> <span class="health-sum">Chat With Experts</span></div>
+      <div style="float:left;margin-top:10px;background-color: #33424B;width:300px;">
+        <table style="width:100%">
+          <tr>
+
+            <td>
+              <div class="input-group ">
+                <input name="searchText" [(ngModel)]="searchValue" id="search-experts" (keyup)="searchExpert($event.target.value)"
+                  style="width: 249px !important;padding-left: 8px;padding-top: 0px;    margin-left: 20px;
+                  margin-right: 15px;margin-top: 20px;border-right: none;border-radius: 2px"
+                  placeholder="Search experts to chat" type="text" class="search-input-menu ">
+
+                <div class="drop-down-search-menu " style="background-color: #33424B;border: 1px solid #ced4da !important;
+                border-left: none !important;     margin-left: 260px;border-radius: 2px;;
+    margin-top: -27px;"
+                  id="search-btn" name="search">
+                  <img src="assets/images/reset_icon.png" (click)="clearSearch()" style="margin-right: 9px;cursor: pointer;margin-top: -2px;border-radius: 2px"
+                    aria-expanded="true" />
+
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <div class="table-responsiveChat " id="table_health" style="width:300px;background-color: #33424B;height: 151px;">
+          <div style="width:300px;height: 180px;overflow-y: auto">
+
+            <table data-toggle="table" data-show-toggle="true" data-show-columns="true" id="eventsTable" style="margin-right: 20px;margin-left: 20px;margin-top: 15px;">
+              <thead>
+
+              </thead>
+              <tbody>
+                <tr *ngFor="let expert of expertsJsonVisible">
+                  <td style="width:10%">
+                    <div> <img src="assets/images/expert.png" style="width:30px!important;height:30px!important;border-radius: 10px   ">
+                    </div>
+                  </td>
+                  <td style="width:72%"><span class="expert-data">{{expert.expertName}}
+                    </span></td>
+
+                  <td style="width:18%"><button style="background-color: #33424B;margin-left: 0px;" class="border-btn"><a
+                        style="color: #00A8FF" [href]="sanitize(expert.expertChatId)">CHAT</a>
+                    </button> </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="right-div">
+      <div class="reco-rem" *ngIf="planEnabled=='block'" style="margin-left:20px;margin-bottom:10px">Recommended
+        Remediation Action <span style="float:right">
+
+        </span>
+        <button class="select-box" data-toggle="modal" style="margin-left: 168px;; cursor: pointer;" data-backdrop="static"
+           data-keyboard="false" data-target="#actionModal" (click)="openModel('','0')">+ ADD NEW</button>
+        <button class="border-btn" style="margin-right:15px; cursor: pointer;" (click)="openHistory()">HISTORY</button>
+        <a href="OpsRecorder:" type="application/octet-stream" style="cursor: pointer;"><button class="border-btn"
+            style="cursor: pointer;"> RECORD ACTION </button> </a>
+
+
+      </div>
+
+      <div class="right-box" style=" overflow-y: auto;" *ngIf="planEnabled=='block'">
+        <div *ngIf="planEnabled=='block'">
+          <div *ngFor="let plan of remediAtionPlanjson">
+            <div class="plan-card" role="button" >
+              <!-- <div class="ribbon"><span>NEW</span></div> -->
+              <!-- <div class="ribbon"><span>NEW</span></div> -->
+              <div class="box-heading"   style="margin-left:10px; max-width:178px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap ;float:left" data-toggle="tooltip" data-placement="top" title="{{plan.remediationPlanName }}"  >{{plan.remediationPlanName}}</div>
+              <div style="width:23%;float:right ;margin-top:-45px;"><i *ngIf="plan.userDefined && currentDate==plan.lastRunDateTime"
+                  class="new-tag" style="width: 51px;height: 39px;margin-top: 1px;"></i></div>
+              <table style="width: 190px;height: 75px; margin-left: 10px;">
+                <tr>
+                  <td class="th-text">Last Used</td>
+                  <td class="th-text">{{plan.lastRunDateTime}}</td>
+                </tr>
+                <tr>
+                  <td class="th-text">Used by</td>
+                  <td class="th-text">{{plan.lastRunBy}}</td>
+                </tr>
+                <tr>
+                  <td class="th-text">Run Duration</td>
+                  <td class="th-text">{{plan.runDuration}}</td>
+                  <td></td>
+                </tr>
+              </table>
+              <button class="select-box" style="margin-left: 83px;margin-top: 5px;cursor: pointer;" data-toggle="modal"
+                data-backdrop="static"  data-keyboard="false" data-target="#actionModal" (click)="openModel(plan.remediationPlanName,plan.remediationPlanid)">SELECT</button>
+              <div class="progress-load" *ngIf="plan.status=='FAILED'">
+                <!--  -->
+                <div class="text-style" (click)="retryPlanExecution(plan.remediationPlanid)" onclick="event.stopPropagation();return false;" style="cursor: pointer;color:#00A8FF !important; margin-top: -4px">
+                  Retry
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div *ngIf="planEnabled=='none'" style="height:498px;width:723px">
+        <div *ngIf="planEnabled=='none'" class="right-box-history" style="height:488px;width:723px">
+          <app-plan-history (eventClick)="historyEventHandler($event)"></app-plan-history>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+  <div class="modal fade" id="actionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" [ngClass]="enableScriptView==false ?'modal-dialog-small':'modal-dialog-large'" role="document">
+      <div class="modal-content" [ngClass]="enableScriptView==false ?'content-style-small':'content-style-large'">
+
+        <div style="width: 600px;float: left;position: fixed;;">
+
+
+          <form #actionForm="ngForm">
+            <div class="modal-header" style="margin-bottom:2px">
+
+              <table style=" width: 507px">
+                <tr>
+                  <td class="step-text" colspan="2">
+                    <div class="step-text" style="margin-left: -19px; font-weight: 500 !important;" required *ngIf="remediationPlanName == '' ">Remediation
+                      Action: {{ActionName}} </div>
+                    <div class="step-text" style="margin-left: -19px;font-weight: 500 !important;" required *ngIf="remediationPlanName !='' ">Remediation
+                      Action: {{remediationPlanName}} </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <div style="background-color:  #DDDDDD; height: 1px;width: 580px;margin-left: 0px;margin-bottom: 15px;"></div>
+                  </td>
+                </tr>
+                <tr>
+
+                  <td>
+                    <div class="form-group" style="width:52%;float:left">
+                      <input id="ActionName" class="form-control" name="remediationPlanName" type="text" placeholder="Enter New Action Name"
+                        [(ngModel)]="remediationPlanName" (keyup)="validatePlanName($event.target.value)" style="width: 273px;height: 30px;"
+                        [required]="actionNameReq">
+                    </div>
+                    <div class="form-group" style="    width: 38%;float: right; margin-top: -14px;    margin-right: -45px;">
+                      <select class="form-control" [required]="true" [(ngModel)]="selectedPlatform" (change)="onChangePlatform($event.target.value)"
+                        id="platform" name="platform" style="width: 165px;height: 33px !important;">
+                        <option value=""><span class="text-style">Select platform</span></option>
+                        <option *ngFor="let platform of  platformJson" [selected]="(this.remediationPlanActions[0]!=undefined) && (this.remediationPlanActions[0].platformname==platform.platformName)"
+                          value="{{platform.platformName}}">{{platform.platformName}}</option>
+                      </select>
+                    </div>
+                    <div style="width:10%;float:right">
+                      <button class="addaction-box" data-toggle="tooltip" title="Add New Step" style="margin-left:10px;cursor: pointer"
+                        (click)="addRow()"> <i class="add-action"></i></button>
+                    </div>
+
+                  </td>
+
+                </tr>
+                <tr>
+                  <div style=" margin-bottom: 13px;"> <span class="text-style" style="margin-left:62px;margin-right:114px;    font-weight: 500 !important;   ">Stage</span><span
+                      class="text-style" style="    font-weight: 500 !important;">Action</span></div>
+                </tr>
+                <!-- <tr>
+                  <td>
+                    <div class="form-group" style="width:52%;float:left;margin-top: -17px;">
+                      <select class="form-control" id="platform" style="width: 134px;height: 30px !important;">
+                        <option value=""><span class="text-style">Select platform</span></option>
+                        <option *ngFor="let platform of  platformJson" value="{{platform.platformName}}">{{platform.platformName}}</option>
+                      </select>
+                    </div>
+                  </td>
+                </tr> -->
+              </table>
+            </div>
+
+            <div class="modal-body table-responsive popup-table " style="background-color: #ffffff;height: 298px;margin-top: -32px;"
+              *ngFor='let i=index; let plan of remediationPlanActions'>
+
+
+              <table *ngFor='let k=index;let action of plan.actions' style="    margin-top: -15px;">
+                <tr [ngClass]="action.isdeleted?'hide':'show'" style="height: 51px;">
+                  <!--  -->
+                  <td> <span class="text-style" style=" padding-left: 0px;margin-right: 10px;font-weight: 500 !important;">Step
+                      #{{action.actionsequence}}</span> </td>
+                  <td class="th-text" style="padding-left: 0px">
+                    <div class="form-group">
+                      <select [required]="true" [(ngModel)]="action.actionstageid" name="actionstagename_{{i}}_{{k}}"
+                        class="form-control" id="actionstageid_{{i}}_{{k}}" style="width: 134px;height: 30px !important;"
+                        (change)="onChangeType($event,action)">
+                        <option value="" [selected]="action.actionstageid== '0'  || action.actionstageid == '' "><span
+                            class="text-style">Select</span></option>
+                        <option *ngFor='let elements of jsonActionStage' [selected]="action.actionstageid==elements.actionStageId"
+                          value="{{elements.actionStageId}}"><span class="text-style">{{elements.actionStageName}}</span></option>
+
+                      </select>
+
+                    </div>
+
+                  </td>
+                  <td>
+                    <div style="margin-left: 15px;" class="form-group">
+                      <input type="text" class="step-text form-control" [(ngModel)]="action.actionname" name="scriptname_{{i}}_{{k}}"
+                       [required]="true" style="width: 265px; margin-right: 30px !important;margin-top: 11px;"
+                        readonly>
+
+                      <!-- <select [required]="!action.isdeleted" [(ngModel)]="action.actionid" name="actionid_{{k}}" class="form-control"
+                      style="width: 290px;height: 30px;" (change)="onChangeActionScript($event.target.value,action)"
+                      *ngFor='let actionScript of jsonActionScript'>
+                      <option value="" [selected]="action.actionid=='' || action.actionid=='0' "><span class="text-style">Select</span></option>
+                      <option *ngFor='let script of actionScript.businessProcesses' [selected]="script.id==action.actionid"
+                        value="{{script.id}}"><span class="text-style">{{script.name}}</span></option>
+                    </select> -->
+
+
+                    </div>
+
+
+
+                  </td>
+                  <td data-toggle="tooltip" title="Select Script"> <button style="cursor: pointer;" class="browse-border"
+                      (click)="browseScript(action)"><i class="browse-img" style="margin-left: -14px;"></i></button></td>
+                  <td data-toggle="tooltip" title="Delete Step"> <i style="margin-left: 10px;cursor: pointer;" (click)="removeAction(action)"
+                      class="delete-action"></i></td>
+                </tr>
+
+                <tr style="height: 37px" [ngClass]="action.isdeleted?'hide':'show'" *ngFor='let l=index;let parameter of action.parameters'>
+                  <!-- <td class="step-text" style="width: 49px;"></td> -->
+                  <td class="step-text" colspan="2">
+                    <div class="step-text" style="margin-right:2px;margin-top: -13px;">Parameter #{{(l+1)}}</div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <input type="text" class="step-text form-control" style="width: 126px;margin-right: 20px;height: 30px;"
+                        disabled value="{{parameter.name}}">
+                    </div>
+                  </td>
+                  <td [ngClass]="parameter.isfield==false ?'show-div':'hide'">
+                    <div class="form-group">
+                      <input type="text" [required]="!action.isdeleted && parameter.isfield==false && parameter.ismandatory"
+                        [(ngModel)]="parameter.providedvalue" name="providedvalue_{{k}}_{{l}}" class=" text-style form-control"
+                        (keyup)="onChangeParamValue($event.target.value)" style="width: 164px;height:30px" value="{{parameter.providedvalue}}">
+                    </div>
+                  </td>
+                  <td [ngClass]="parameter.isfield==true?'show-div':'hide'">
+                    <div class="form-group" style="    margin-top: -13px;">
+                      <select [required]="!action.isdeleted && parameter.isfield==true && parameter.ismandatory"
+                        [(ngModel)]="parameter.providedvalue" name="providedvaluefield_{{k}}_{{l}}" class="form-control"
+                        style="width: 164px;height:30px" (change)="onChangeFieldParameter($event.target.value,parameter)"
+                        data-toggle="tooltip" data-placement="top" title="{{ parameter.providedvalue }} ">
+                        <option value="" [selected]="parameter.providedvalue=='' || parameter.providedvalue=='0' ">Select</option>
+                        <option [selected]="parameter.providedvalue=='Component'" value="Component"> <span class="text-style">Component
+                            : {{resourceId}}</span></option>
+                        <option [selected]="parameter.providedvalue=='Parameter'" value="Parameter"><span class="text-style">Parameter
+                            : {{jsonComponent.observableName}}</span></option>
+                        <option [selected]="parameter.providedvalue=='Parameter Health'" value="Parameter Health"><span
+                            class="text-style">Parameter Health : {{jsonComponent.serverState}}</span>
+                        </option>
+                        <option [selected]="parameter.providedvalue=='Recorded Value'" value="Recorded Value">
+                          <span class="text-style">Recorded Value : {{jsonComponent.value}}</span>
+                        </option>
+                        <option [selected]="parameter.providedvalue=='Recorded Time'" value="Recorded Time">
+                          <span class="text-style">Recorded Time : {{jsonComponent.observationTime}}</span>
+                        </option>
+                        <option [selected]="parameter.providedValue=='Threshold'" value="{{jsonComponent.threshold}}">
+                          <span class="text-style">Threshold : {{jsonComponent.threshold}}</span></option>
+                      </select>
+                    </div>
+                  </td>
+
+                  <td>
+                    <div style="margin-left: 12px; " data-toggle="tooltip" title="Custom Input - Choose">
+                      <label class="switch">
+                        <input id="switch_{{i}}" type="checkbox" [checked]="parameter.isfield==false" (change)="changeFieldType($event.target.checked,parameter)">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </td>
+
+                </tr>
+              </table>
+
+            </div>
+
+            <!-- <div style="background-color:  #DDDDDD; height: 1px;width: 540px;margin-left: 15px;"></div> -->
+            <div [ngClass]="enableScriptView==false ?'cred-bar':'cred-bar-large'">
+
+              <table>
+                <tr>
+                  <td>
+                    <div class="form-group" style="width:150px;float:left">
+                      <input id="username" class="form-control ng-valid" name="username" type="text" placeholder="Username"
+                        [(ngModel)]="username" autocomplete="off" style="width: 150px;height: 30px;margin-left:20px;color:white; background-color: #33424B;margin-top: 5px;"
+                        (keyup)="validateUsername($event.target.value)" [required]="usernameFlag">
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group" style="width:150px;">
+                      <input id="password" autocomplete="off" [required]="passwordFlag" class="form-control ng-valid"
+                        name="password" type="password" placeholder="Password" [(ngModel)]="password" style="width: 150px;height: 30px; margin-left:36px; background-color: #33424B;color: white !important;margin-top: 5px;"
+                        (keyup)="validatePassword($event.target.value)">
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group" style="width:150px; margin-top: -11px;">
+                      <select id="server_nodes" name="server_nodes" [required]="nodeFlag" [(ngModel)]="selectedNodeId"
+                        (change)="onChangeNode($event.target.value)" style="width: 150px;height: 30px; margin-left:50px; background-color: #33424B;  line-height: 1.5;border-radius: .25rem;    color: white;margin-top: 15px;">
+                        <option value="" selected><span class="text-style">System Name</span> </option>
+                        <option value="{{node.name}}" *ngFor="let node of nodesListJson">{{node.name}}</option>
+                      </select>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div [ngClass]="enableScriptView==false ?'save-small':'save-large'">
+              <button class="btn-cancel  cancel-btn " (click)="cancelAction()" style="cursor: pointer" role="button"
+                data-dismiss="modal">
+                CANCEL
+              </button>
+              <button class=" btn-cancel  cancel-btn " style="margin-left: 20px;margin-right: 12px;border-color: #00A8FF;border-style: solid;cursor: pointer;"
+                type="submit" (click)="saveAction(actionForm.form.valid)"> SAVE </button>
+              <button class="execute" role="button" (click)="executeAction()" [disabled]=" this.actionModified?'disabled':''">
+                EXECUTE
+              </button>
+
+            </div>
+
+          </form>
+        </div>
+        <div class="popup-right" *ngIf="enableScriptView==true" style="margin-top: 40px">
+          <div style="background-color:  #DDDDDD; height: 1px;       width: 431px;;;margin-left: -53px;margin-bottom: 2px;">
+          </div>
+            <div style=" border-left: 1px solid #DDDDDD;margin-left: -7px;">
+            <div style="width:104px;height:20px;margin-top: 20px;margin-left:7px" class="text-style"> Select Category</div>
+            <div class="category-list">
+              <tree-root [nodes]="categoriesList" [options]="{}" (activate)="onSelect($event)"></tree-root>
+            </div>
+
+            <div class="browse-script">
+              <div style="width:200px;height:30px">
+                <input name="searchscript" id="search-script" [(ngModel)]="searchScriptVal" (keyup)="searchScript($event.target.value)"
+                  placeholder="Search Script" type="text" class="search-script-menu ">
+                <div class=" rounded-0 drop-down-search-menu script-refresh" id="search-btn" name="search">
+                  <img src="assets/images/reset_icon.png" (click)="clearScriptSearch()" style="margin-right: 9px;cursor: pointer"
+                    aria-expanded="true" />
+
+                </div>
+              </div>
+              <div style="width:200px;height:30px;margin-top: 10px;
+            margin-left: 3px;">
+                <span class="th-text" style="margin-right:20px;color:#33424B;width:70px">Choose Script</span>
+              </div>
+
+
+              <div style="width:200px;height:300px;overflow: auto;">
+                <div *ngFor='let actionScript of jsonActionScriptVisible  '>
+                  <div class="script-select" style="margin-left: 14px;" *ngFor='let script of actionScript.businessProcesses  '
+                    (click)="selectScript(script.id,script.name)">{{script.name}}</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          </div>
+        <!-- </div> -->
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="stepModal" tabindex="-1" role="dialog" aria-labelledby="stepModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-left: -27%;   width: 800px !important;  height: 323px !important;">
+      <div class="modal-header" style="   border-bottom: 1px solid #e9ecef !important ;">
+       
+ <h5 class="modal-title " id="exampleModalLabel" style="margin-top: -18px;"> <span class="text-style" style="color:#33424B">Plan Details</span> </h5>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+      </div>
+      <div class="modal-body" >
+        <div class="tbl_stepdetailsparent" style="width:766px;height:40px;overflow-y: auto;;background-color: #33424B !important">
+          <table style="margin-top: 10px;height:40px;width:766px;overflow-y: auto;background-color: #33424B !important">
+            <thead>
+              <tr>
+                <td style="width:126px">Script Name</td>
+                <td style="width:70px">Status</td>
+                <td style="width:240px">Output</td>
+                <td style="width:240px">Logs</td>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <div class="tbl_stepdetails" style="width:766px;  height: 175px;;overflow-y: auto;">
+          <table style="width:766px;overflow-y: auto;">
+
+            <tbody>
+              <tr *ngFor='let plan of planStepJson'>
+                <td  style="cursor: pointer; width:120px;max-width:120px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap "  data-toggle="tooltip" data-placement="top" title="{{ plan.scriptname }} "> {{plan.scriptname}} </td>
+                <td style="width:70px">{{plan.status}} </td>
+                <td style="width:240px"><textarea readonly style="overflow-y: auto;width:235px;height: 70px;margin-top:5px">{{plan.output}} </textarea> </td>
+                <td style="width:240px"> <textarea  readonly style="overflow-y: auto;width:235px;height: 70px;">{{plan.logdata}}</textarea> </td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+
+      </div>
+      <div class="modal-footer" style="height: 70px !important;border-top: 1px solid #ffffff !important;
+      margin-top: -16px;" >
+
+
+        <button class="execute" data-dismiss="modal" role="button">
+          CLOSE
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

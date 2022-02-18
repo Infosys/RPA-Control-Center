@@ -1,0 +1,68 @@
+
+        <div class="row" style="height: 60px;width:101%">
+            <nav class="navbar navbar-expand-lg navbar-light float-left" style="background-color: #F3F1EE;width:63px; ">
+                <img src="assets/images/menu.png" data-toggle="collapse" (click)="handleCollapse()" data-target="#demo" aria-expanded="true"
+                    style="margin-right: 20px;padding-left: 7px;" />
+               
+            </nav>
+            <nav  class="navbar navbar-expand-lg navbar-light" id="appbank_nav" style="background-color: #F3F1EE;width:212px; padding-top:23px;padding-left: 1px;">
+                    <span class="appbank-txt ">MENU</span>
+            </nav> 
+            <!-- //TO-DO changed from it control center to RPA :as per superbot intgreation change jan 3rd 2020 -->
+            <nav class="navbar navbar-expand-lg navbar-light initial-width" id="dashboard_nav" style="background-color: #FFFFFF; margin-right: 29px;">
+                <span (click)="routeHealth()" class="dashboard-txt">{{projectTitle}}</span>
+                
+            </nav>
+            <!-- <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #F3F1EE;width:22%;margin-right: 1px;">
+                <div class="container">
+                    <form action="#" method="get" novalidate="" class="ng-untouched ng-pristine ng-valid">
+                        <div class="input-group" style="width: 119%;">
+                            <input class="form-control" name="q" placeholder="Search" type="text" style="border-color: #F3F1EE;background-color:#F3F1EE; padding-left: 0px;    margin-left: -13px;">
+                            <span class="btn btn-flat" id="search-btn" name="search" style="background-color:#F3F1EE">
+                                <img style="padding-left: 50%;" src="assets/images/search.png">
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </nav> -->
+            <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #FFFFFF;width:22%;margin-right: 1px;">
+                <span class="auto-refresh" style="margin-left: 100px;">Auto Refresh</span>
+                <span style="margin-left: 12px; padding-top: 13px;"><label class="switch">
+                   
+                    <input type="checkbox" [checked]="isIntevalFlagEnabled" (change)="changeInterval($event.target.checked)">
+                    <span class="slider round"></span>
+                  </label></span>
+            </nav>
+            <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #F3F1EE;width:60px;padding-left: 0%;margin-right: 1px;cursor: pointer;margin-top: -12px;">
+                <img style="padding-left: 58%;" src="assets/images/help.png">
+            </nav>
+            <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #F3F1EE;width:60px;padding-left: 0%;cursor: pointer;margin-top: -12px;">
+                <img style="padding-left: 50%;" src="assets/images/alerts.png">
+            </nav>
+            <nav class="navbar navbar-expand-lg navbar-light  " style="padding-left: 0%;width:26px">
+                <div class="btn btn-flat" data-toggle="dropdown" style="width: 48px; height: 60px;">
+                    <img style="width:60px;height:60px;margin-left: -39%;    margin-top: -15px;" src="assets/images/profile.png">
+                </div>
+
+                <table class="dropdown-menu rounded-0 tbl_profile">
+
+                    <tr>
+                        <td>Mr.John Doe</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <hr style="background-color: #F4F2EE; height: 1px; margin-left: 0%;width: 100%;margin-top: 1%;margin-bottom: 1%">
+                        </td>
+                        <br/>
+                    </tr>
+
+                    <tr>
+                        <td>Account Settings</td>
+                    </tr>
+                    <tr>
+                        <td>Sign out</td>
+                    </tr>
+                </table>
+            </nav>
+        </div>
+  

@@ -1,0 +1,409 @@
+<div class="container-fluid" style="width:100%">
+    <div style="padding-top:12px;padding-left: 5px">
+        <a href="#" routerLink="/main/clusters" onclick="return false;">
+            <span class="component-health-menu ham-menu ham-color">All Clusters</span>
+        </a>
+
+        <span class="arrow-menu"><img src="assets/images/breadcrum_arrow.png"> </span>
+        <a href="#" (click)="navigateToPortfolio(clusterName)" onclick="return false;">
+            <span class="component-health-menu ham-menu ham-color">{{clusterName}}</span>
+        </a>
+
+        <span class="arrow-menu"><img src="assets/images/breadcrum_arrow.png"> </span>
+        <a href="#" (click)="navigateToMoniterHealth()" onclick="return false;">
+            <span class="component-health-menu ham-menu ham-color">{{portfolioName}}</span>
+        </a>
+        <span class="arrow-menu"><img src="assets/images/breadcrum_arrow.png"> </span>
+        <span class="component-health-menu ham-menu-disabled">Component Health</span>
+    </div>
+    <div style="padding-left: 5px" class="component-health-txt">Component Health Overview</div>
+    <div class="row" style="margin-bottom: 20px">
+        <div (click)="filterMainTable('all')" style="background-color: #33424B;margin-left: 20px;width: 140px;height: 150px;cursor: pointer">
+            <div style="width: 150px; text-align: center;">
+                <table style=" width: 120px;height: 130px; margin-top: 10px; " class="total">
+                    <tr>
+                        <td class="total-txt"> Total</td>
+                        <td class="card-number">{{ ("00"+countOfChecks).slice(-2) }}</td>
+                    </tr>
+                    <hr style="background-color: #677176; size: 1px; margin-left: 6%;margin-top: 1%;margin-bottom: 1%;width:135%">
+                    <tr class="card-text">
+                        <td class="card-text">Critical</td>
+                        <td class="card-number">{{ ("00"+criticalCount).slice(-2) }}</td>
+                    </tr>
+                    <tr class="card-text">
+                        <td class="card-text">Warning</td>
+                        <td class="card-number">{{ ("00"+warningCount).slice(-2) }}</td>
+                    </tr>
+                    <tr class="card-text">
+                        <td class="card-text">Healthy</td>
+                        <td class="card-number">{{ ("00"+healthyCount).slice(-2) }}</td>
+                    </tr>
+                </table>
+            </div>
+
+
+        </div>
+
+        <!-- <div style="padding-left: 20px;width: 220px;height:150px;"> -->
+        <div (click)="filterMainTableRecent()" class="tbl_recent" style="width: 220px;height:150px; background-color: #33424B;text-align: center;margin-left: 20px;line-height: 18px;cursor:pointer">
+            <table style="width: 95%;height: auto; background-color: #33424B;table-layout: fixed;  ">
+                <tr style="height: 2px">
+                    <td class="total-txt">
+
+                        5 Recent Components
+                    </td>
+                </tr>
+                <hr style="background-color: #677176; size: 1px; margin-left: 09px;margin-top: 4px;margin-bottom: 4px">
+                <tr *ngFor="let recentComponent of jsonRecentComponentData">
+                    <td style="max-width:178px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap " class="card-text"
+                        data-toggle="tooltip" data-placement="top" title="{{ recentComponent.resourceName }} ">{{
+                        recentComponent.resourceName }}</td>
+                </tr>
+            </table>
+        </div>
+        <!-- </div> -->
+
+        <div (click)="filterMainTable('Critical')" style="width: 310px;margin-left:10px;cursor: pointer">
+            <div class="card float-left image-card rounded-0" style="width:150px;height:150px;background-color: #33424B;margin-left:10px">
+                <canvas id="canvas_critical" class="float-left" style="display: block;width: 120px;height: 120px;">
+                </canvas>
+            </div>
+            <div class="card content-card rounded-0" style="width: 150px;height: 150px; ">
+                <table style="width: 130px;height: 125px; background-color: #33424B;  margin-top: 10px " class="total ">
+                    <tr style="width:20%">
+
+
+                    </tr>
+                    <tr>
+                        <td class="total-txt">
+                            Critical
+                        </td>
+                        <td class="card-number">
+                            {{ ("00"+cardCriticalCount).slice(-2) }}
+                        </td>
+
+                    </tr>
+                    <hr style="background-color: #677176; size: 1px; margin-left: 10%;margin-top: 1%;margin-bottom: 1%;width:116%">
+
+
+                    <!--<tr class="card-text">
+                        <td class="card-text">Server</td>
+                        <td class="card-number">{{ ("00"+serverCriticalCount).slice(-2) }}</td>
+                    </tr>
+                    <tr class="card-text">
+                        <td class="card-text">Database</td>
+                        <td class="card-number">{{ ("00"+dbserverCriticalCount).slice(-2) }}</td>
+                    </tr>
+                    <tr class="card-text">
+                        <td class="card-text">Other</td>
+                        <td class="card-number">{{ ("00"+otherCriticalCount).slice(-2) }}</td>
+                    </tr>-->
+                    <tr class="card-text" *ngFor = "let obj of criticalStates">
+                        <td class="card-text">{{obj.name.replace("Critical","")}}</td>
+                        <td class="card-number">{{ ("00"+obj.value).slice(-2) }}</td>
+                    </tr> 
+                    
+                    
+                </table>
+            </div>
+
+        </div>
+
+        <div (click)="filterMainTable('Warning')" style="width: 310px;margin-left:10px;cursor: pointer">
+            <div class="card float-left image-card rounded-0" style="width:150px;height:150px;background-color: #33424B;margin-left:10px">
+                <canvas id="canvas_warning" class="float-left"   style="display: block;width: 120px;height: 120px;">
+                </canvas>
+
+            </div>
+            <div class="card content-card rounded-0" style="width: 150px;height: 150px; ">
+                <table style="width: 130px;height: 125px; background-color: #33424B; margin-top: 10px  " class="total ">
+                    <tr style="width:20%">
+
+
+                    </tr>
+                    <tr>
+                        <td class="total-txt">
+                            Warning
+                        </td>
+                        <td class="card-number">
+                            {{ ("00"+cardWarningCount).slice(-2) }}
+                        </td>
+
+                    </tr>
+                    <hr style="background-color: #677176; size: 1px; margin-left: 10%;;margin-top: 1%;margin-bottom: 1%;width:120%">
+
+
+                    <tr class="card-text">
+                        <td class="card-text">Server</td>
+                        <td class="card-number">{{ ("00"+serverWarnCount).slice(-2) }}</td>
+                    </tr>
+                    <tr class="card-text">
+                        <td class="card-text">Database</td>
+                        <td class="card-number">{{ ("00"+dbserverWarnCount).slice(-2) }}</td>
+                    </tr>
+                    <tr class="card-text">
+                        <td class="card-text">Other</td>
+                        <td class="card-number">{{ ("00"+otherWarnCount).slice(-2) }}</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="row " style="margin-left:5px;margin-right: 2px;margin-bottom: 10px">
+        <div class="boxes-div  border border-dark">
+
+            <span class="component-bg"> Components: </span>
+            <div class="boxes-div-size">
+                <button *ngFor=" let items of checkedElements" class="delete-box rounded">{{items}}
+                    <span (click)="deleteComponentBox(items)" class="delete_box_img" title="Click to delete">
+                        <img src="assets/images/close.png">
+                    </span>
+                </button>
+            </div>
+            <div style="margin-top: -26px;margin-left: 95px;">
+                <button class="add-box  cursor-pointer" (click)="getParameterType()" style="float:right;border-color: #00A8FF;border-style: solid;"
+                    role="button" data-toggle="modal" data-target="#exampleModal"> ADD </button>
+                <button class="btn-clear-box cursor-pointer " (click)="clearCheckedElements()" role="button" data-toggle="modal">
+                    CLEAR </button>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="table-responsive row" id="table_health" style="background-color: #33424B;height: 304px;; width:1020px;margin-left:5px; padding-right: 20px;margin-bottom:20px">
+        <div style="padding-left: 20px; padding-top: 20px;">
+
+            <table data-toggle="table" data-show-toggle="true" data-show-columns="true" id="eventsTable" style="width: 100%;">
+                <thead>
+                    <tr style="background-color: #253138;height:35px">
+                        <td style="cursor:pointer;width:398px" (click)="sortBy('resourceId',componentDataVisible.length)">
+                            <span style=" margin-right: 7px;margin-left: 25px;">
+                                <i class="img-tbl-unchk" onclick="event.stopPropagation();" (click)="toggleMainheaderCheck($event.currentTarget.id,componentDataVisible.length)"
+                                    style="margin-bottom: -4px;" id="main_tbl_chk"></i>
+                            </span> Component <img style="margin-left: 5px;" src="assets/images/up-and-down-arrow.png"></td>
+                        <td style="cursor:pointer;" (click)="sortBy('resourcetypeId',componentDataVisible.length)">Type
+                            <img style="margin-left: 5px;" src="assets/images/up-and-down-arrow.png"></td>
+                        <td style="cursor:pointer;" (click)="sortBy('componentHealth',componentDataVisible.length)">Health
+                            <img style="margin-left: 5px;" src="assets/images/up-and-down-arrow.png"></td>
+                        <td style="text-align: center;cursor:pointer;" (click)="sortBy('componentParam',componentDataVisible.length)">Parameter
+                            <img style="margin-left: 5px;" src="assets/images/up-and-down-arrow.png"></td>
+                        <td style="text-align: center;cursor:pointer;" (click)="sortBy('criticalCount',componentDataVisible.length)">Critical
+                            <img style="margin-left: 5px;" src="assets/images/up-and-down-arrow.png"></td>
+                        <td style="text-align: center;cursor:pointer;" (click)="sortBy('warningCount',componentDataVisible.length)">Warning
+                            <img style="margin-left: 5px;" src="assets/images/up-and-down-arrow.png"></td>
+                    </tr>
+                </thead>
+            </table>
+            <div style="height: 190px;overflow-y: auto">
+                <table data-show-toggle="true" data-show-columns="true" style="width: 100%;">
+
+                    <tbody id="filter_tbl" *ngFor="let i=index;let component of componentDataVisible ">
+                        <!-- border-style:hidden;  -->
+                        <tr id="row_{{i}}" class="" *ngIf=" checkedElements.length>0 && checkedElements.indexOf(component.resourceName) > -1 || tableFlag==0  ">
+                            <td style="width:390px">
+                                <span class="float-left">
+                                    <i class="img-table-plus" (click)="toggleSubTable($event,i)" data-toggle="collapse"
+                                        attr.id="row{{i}}" style="cursor: pointer;" attr.data-target=".row{{i}}"></i>
+                                </span>
+                                <span style=" margin-right: 7px;margin-left: 10px;">
+                                    <i class="img-tbl-unchk" attr.id="{{i}}" style="cursor: pointer;" (click)="toggleTableCheck($event,component.resourceId,component.observations.length )"></i>
+                                </span>
+                                <!-- <span class="component-data"  id="component_data_{{i}}">{{ component.resourceId }}</span> -->
+                                <span class="component-data" id="component_data_{{i}}">{{ component.resourceName }}</span>
+                            </td>
+                         
+                            <td style="width:100px">{{ component.resourcetypeId }} </td>
+                            <td style="width:100px">
+                                <div class="{{ component.componentHealth }}"> </div>
+                            </td>
+                            <td style="text-align: center;">{{ ("00"+component.componentParam).slice(-2) }}</td>
+
+                            <td style="text-align: center;">{{ ("00"+component.criticalCount).slice(-2) }}</td>
+                            <td style="text-align: center;">{{ ("00"+component.warningCount).slice(-2) }}</td>
+
+
+                        </tr>
+                        <div>
+
+                        </div>
+                        <tr attr.class="collapse row{{i}}" id="sub_tbl_row{{i}}" style="transition: all 1ms;">
+                            <td colspan="6" style="margin-left: 20px;">
+
+                                <div style="margin-left: 26px;background: #3A4C56;width:940px;">
+                                    <table style="margin-left: 26px;background: #3A4C56;width:896px;margin-bottom: 5px;">
+                                        <thead>
+                                            <tr>
+
+                                                <td style="padding-left: 30px;">Parameter </td>
+                                                <td>Threshold</td>
+                                                <td>Recorded Value </td>
+                                                <td> Recorded At</td>
+                                                <td> Parameter Health</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let j=index;let observation of component.observations">
+                                            <tr>
+                                                <td>
+                                                    <span style=" margin-right: 7px;margin-left: -11px;">
+                                                        <i style="margin-left: 14px;" class="img-tbl-unchk" attr.id="sub_row_chk_{{i}}{{j}}"
+                                                            (click)="toggleSubTableCheck($event,component.observations.length,i,j)"></i>
+                                                    </span>
+                                                    <span attr.id="obsname_{{observation.observableName}}">{{
+                                                        observation.observableName }}</span>
+                                                </td>
+
+                                                <td>{{ observation.threshold }}</td>
+                                                <td>{{ observation.value }}</td>
+                                                <td>{{ observation.observationTime | date: "dd MMM yy | hh:mm a" }}</td>
+                                                <td>
+                                                    <div style="margin-left: 47px;float:left" class="{{ observation.serverState }}">
+                                                    </div>
+                                                    <div class="float-right " style="margin-left: -32px;
+                                                        margin-top: 5px;">
+                                                        <!-- [disabled]="observation.serverState=='healthy'?'disabled':''" -->
+                                                        <button class="add-box cursor-pointer"  [hidden]="true"
+                                                            (click)="navigateToAction(component.resourceName,component.resourceTypeID,observation,component.resourceId)">Take
+                                                            Action</button> 
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+        <div style="background-clip: #33424B;padding-top: 15px; padding-bottom: 10px;">
+
+            <button style="background-color:#00A8FF;border-color: #00A8FF;border-style: solid; height: 25px; float: right;">
+                <a routerLink="/graphs" target="_blank">
+                    <div class="view-graph-txt" (click)="openWindow()">VIEW GRAPHS</div>
+                </a>
+            </button>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="background-color: #253138;margin-top:35%">
+                <div class="modal-header">
+                    <table>
+
+                        <tr>
+                            <td style="width:218px">
+                                <div class="input-group ">
+                                    <input name="searchText" [(ngModel)]="searchValue" id="search-input" (keyup)="searchComponent($event.target.value)"
+                                        style="width: 158px;padding-left: 8px;padding-top: 0px;" placeholder="Search Component"
+                                        type="text" class="search-input-menu popup-input search-text-model">
+
+                                    <span class=" rounded-0 drop-down-search-menu " style="background-color: #33424B;"
+                                        id="search-btn" name="search">
+                                        <img src="assets/images/reset_icon.png" (click)="clearSearch()" style="margin-right: 9px;cursor: pointer;margin-top: -4px;"
+                                            aria-expanded="true" />
+
+                                    </span>
+                                </div>
+
+                            </td>
+
+                            <td class="filter-by-txt"> Filter by </td>
+                            <td>
+                                <div style="height: 40px;">
+                                    <button class="btn   dropdwn-btn dropdown-toggle " style="margin-top:8px" type="button"
+                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        State
+                                    </button>
+
+
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color:
+                                        #33424B;width: auto">
+                                        <!-- <a class="dropdown-item  filter-txt" onclick="event.stopPropagation();"  ><span> <i style="margin-left: -13px; margin-right: 5px;" (click)="filterBy('all','health')" class="img-tbl-unchk" id="popup_health_a"></i></span> All</a> -->
+                                        <a class="dropdown-item filter-txt" onclick="event.stopPropagation();"  > <span
+                                                class="cursor-pointer"> <i style="margin-left: -16px; margin-right:
+                                                    5px;" class="img-tbl-unchk" (click)="filterBy('healthy','health')"
+                                                      id="popup_health_h"></i></span>Healthy</a>
+                                        <a class="dropdown-item filter-txt" onclick="event.stopPropagation();"  > <span
+                                                class="cursor-pointer"> <i style="margin-left: -16px; margin-right:
+                                                    5px;" class="img-tbl-unchk" (click)="filterBy('Critical','health')"
+                                                    id="popup_health_c"></i></span>Critical</a>
+                                        <a class="dropdown-item filter-txt" onclick="event.stopPropagation();"   > <span
+                                                class="cursor-pointer"> <i style="margin-left: -16px; margin-right:
+                                                    5px;" class="img-tbl-unchk" (click)="filterBy('Warning','health')"
+                                                    id="popup_health_w"></i></span>Warning</a>
+                                    </div> 
+                                </div>
+
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class=" btn  dropdwn-btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Type
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: #33424B;width: auto">
+                                        <!-- <a class="dropdown-item cursor-pointer filter-txt" (click)="filterBy('all','type')" >All</a> -->
+                                        <a class="dropdown-item  filter-txt" *ngFor="let i=index;let parameter of jsonParameterType"
+                                             onclick="event.stopPropagation();"  > <span class="cursor-pointer"> <i style="margin-left:
+                                                    -16px; margin-right: 5px;" class="img-tbl-unchk" (click)="filterBy(parameter.resourceTypeID,'type')"
+                                                    id="popup_type_{{i}}"></i></span>{{ parameter.resourceTypeID }}</a>
+
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="background-color:  #33424B; height: 1px;width: 451px; margin-left: 18px;"></div>
+                <div class="modal-body table-responsive popup-table" style="background-color: #253138;height: 198px;">
+                    <table style=" width: 470px;overflow-y: auto;">
+                        <thead>
+
+                        </thead>
+                        <tbody *ngFor="let i=index;let component of jsonComponentDataFilterVisible">
+                            <tr>
+                                <td>
+                                    <span style=" margin-right: 7px;margin-left: 10px;cursor: pointer">
+                                        <i [ngClass]="(checkedElements.length>0 && checkedElements.indexOf(component.resourceId) > -1)?'img-tbl-unchk img-tbl-chk':'img-tbl-unchk'"
+                                            (click)="toggleTablePopupCheck($event,i,component.resourceName)" attr.id="popup_row_chk_{{i}}"></i>
+                                    </span>
+                                    <span class="filter-data">{{ component.resourceName }}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tr>
+
+                        </tr>
+
+                    </table>
+                </div>
+                <div style="background-color:  #33424B; height: 1px;width: 451px; margin-left: 18px;"></div>
+                <div class="modal-footer">
+                    <button class="btn-cancel  cancel-btn cursor-pointer" (click)="popupCancelFun()" role="button" data-dismiss="modal">
+                        CANCEL </button>
+                    <button class="add-box cursor-pointer " (click)="popupOkFun(jsonComponentData.length)" style="margin-left: 20px;border-color: #00A8FF;border-style: solid;"
+                        role="button" data-toggle="modal" data-dismiss="modal"> OK </button>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
