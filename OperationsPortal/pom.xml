@@ -36,7 +36,7 @@
 	    </plugin>
 	    <plugin>
 	      <artifactId>maven-war-plugin</artifactId>
-	      <version>3.0.0</version>
+	      <version>3.2.2</version>
 	      <configuration>
 	        <warSourceDirectory>WebContent</warSourceDirectory>
 	      </configuration>
@@ -132,11 +132,7 @@
 			<version>1.8.2</version>
 		</dependency>
 		
-	  	<!--<dependency>
-			<groupId>com.infosys.niasln.adapter</groupId>
-			<artifactId>niaadapter</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency> -->
+	  	
 		
 		<dependency>
 		    <groupId>com.fasterxml.uuid</groupId>
@@ -144,11 +140,7 @@
 		    <version>3.1.4</version>
 		</dependency>
 		
-		<dependency>
-			<groupId>com.infosys.iapsln.adapter</groupId>
-			<artifactId>iapadapter</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+		
 		
 		<dependency>
 			<groupId>org.apache.kafka</groupId>
